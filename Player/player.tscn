@@ -4,10 +4,73 @@
 [ext_resource type="Script" uid="uid://bux6rqbdmg53t" path="res://Player/SmoothCamera.gd" id="2_4ntmi"]
 [ext_resource type="Script" uid="uid://cs1mq2tbqkhsh" path="res://Player/crosshair.gd" id="3_btcbx"]
 [ext_resource type="PackedScene" uid="uid://0mecb5mbamv1" path="res://Weapons/SMG.tscn" id="3_gwnis"]
+[ext_resource type="Texture2D" uid="uid://klbme5322fe4" path="res://Player/damage.png" id="5_k53q1"]
+[ext_resource type="PackedScene" uid="uid://25mv5pges5v0" path="res://Player/game_over_menu.tscn" id="6_fhl08"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_hvfyp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l8h54"]
+
+[sub_resource type="Animation" id="Animation_fhl08"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_k53q1"]
+resource_name = "TakeDamage"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.39999998),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fhl08"]
+_data = {
+&"RESET": SubResource("Animation_fhl08"),
+&"TakeDamage": SubResource("Animation_k53q1")
+}
 
 [node name="Player" type="CharacterBody3D" unique_id=648875746 groups=["player"]]
 script = ExtResource("1_l8h54")
@@ -61,3 +124,20 @@ grow_vertical = 2
 [node name="Crosshair" type="Control" parent="CenterContainer" unique_id=806891263]
 layout_mode = 2
 script = ExtResource("3_btcbx")
+
+[node name="DamageTexture" type="TextureRect" parent="." unique_id=629520774]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 324)
+texture = ExtResource("5_k53q1")
+
+[node name="DamageAnimationPlayer" type="AnimationPlayer" parent="DamageTexture" unique_id=171870781]
+libraries/ = SubResource("AnimationLibrary_fhl08")
+autoplay = &"RESET"
+
+[node name="GameOverMenu" parent="." unique_id=146262174 instance=ExtResource("6_fhl08")]
+visible = false
