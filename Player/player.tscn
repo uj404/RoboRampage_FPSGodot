@@ -3,7 +3,9 @@
 [ext_resource type="Script" uid="uid://bmbswpp1y34gq" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="Script" uid="uid://bux6rqbdmg53t" path="res://Player/SmoothCamera.gd" id="2_4ntmi"]
 [ext_resource type="Script" uid="uid://cs1mq2tbqkhsh" path="res://Player/crosshair.gd" id="3_btcbx"]
+[ext_resource type="PackedScene" uid="uid://blv6dmt6vo4ih" path="res://Weapons/Rifle.tscn" id="3_fhl08"]
 [ext_resource type="PackedScene" uid="uid://0mecb5mbamv1" path="res://Weapons/SMG.tscn" id="3_gwnis"]
+[ext_resource type="Script" uid="uid://bbxne7ng64vom" path="res://Player/WeaponHandler.gd" id="3_od3ui"]
 [ext_resource type="Texture2D" uid="uid://klbme5322fe4" path="res://Player/damage.png" id="5_k53q1"]
 [ext_resource type="PackedScene" uid="uid://25mv5pges5v0" path="res://Player/game_over_menu.tscn" id="6_fhl08"]
 
@@ -90,8 +92,6 @@ top_level = true
 cull_mask = 1048573
 script = ExtResource("2_4ntmi")
 
-[node name="SMG" parent="CameraPivot/SmoothCamera" unique_id=620903699 instance=ExtResource("3_gwnis")]
-
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="CameraPivot/SmoothCamera" unique_id=966242097]
 remote_path = NodePath("../../../SubViewportContainer/SubViewport/WeaponCamera")
 
@@ -114,15 +114,26 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025, 0.3, 0)
 cull_mask = 2
 fov = 40.0
 
+[node name="WeaponHandler" type="Node3D" parent="SubViewportContainer/SubViewport/WeaponCamera" unique_id=1087026449 node_paths=PackedStringArray("weapon_1", "weapon_2")]
+script = ExtResource("3_od3ui")
+weapon_1 = NodePath("Rifle")
+weapon_2 = NodePath("SMG")
+
+[node name="Rifle" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" unique_id=620903699 instance=ExtResource("3_fhl08")]
+
+[node name="SMG" parent="SubViewportContainer/SubViewport/WeaponCamera/WeaponHandler" unique_id=69455344 instance=ExtResource("3_gwnis")]
+
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1844286387]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Crosshair" type="Control" parent="CenterContainer" unique_id=806891263]
 layout_mode = 2
+mouse_filter = 2
 script = ExtResource("3_btcbx")
 
 [node name="DamageTexture" type="TextureRect" parent="." unique_id=629520774]
@@ -133,6 +144,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(576, 324)
+mouse_filter = 2
 texture = ExtResource("5_k53q1")
 
 [node name="DamageAnimationPlayer" type="AnimationPlayer" parent="DamageTexture" unique_id=171870781]
