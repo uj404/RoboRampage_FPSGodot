@@ -4,6 +4,7 @@
 [ext_resource type="Material" uid="uid://kfy744f348gb" path="res://Levels/Materials/GrayMaterial.tres" id="1_r8rh2"]
 [ext_resource type="Material" uid="uid://chn0hdd3ssx50" path="res://Levels/Materials/PinkMaterial.tres" id="3_yawbu"]
 [ext_resource type="PackedScene" uid="uid://c26nqbn1jvr1n" path="res://Enemy/enemy.tscn" id="4_yawbu"]
+[ext_resource type="PackedScene" uid="uid://ctgrqsudug5ti" path="res://Pickups/pickup.tscn" id="5_bpqh8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_2b7vw"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -263,3 +264,6 @@ material = ExtResource("3_yawbu")
 
 [node name="Enemy" parent="." unique_id=845951415 instance=ExtResource("4_yawbu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 1, 8)
+
+[node name="Pickup" parent="." unique_id=663822267 instance=ExtResource("5_bpqh8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 0)
