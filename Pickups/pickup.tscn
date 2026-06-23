@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ctgrqsudug5ti"]
 
 [ext_resource type="Script" uid="uid://1kwmep1rjb50" path="res://Pickups/pickup.gd" id="1_0pywb"]
+[ext_resource type="Shader" uid="uid://chh0w3fwvo4iu" path="res://Pickups/FresnelAura.tres" id="2_vx7qd"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_j6dbu"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -8,14 +9,65 @@ size = Vector3(0.5, 0.5, 0.5)
 [sub_resource type="SphereShape3D" id="SphereShape3D_j6dbu"]
 radius = 1.0
 
+[sub_resource type="Animation" id="Animation_vx7qd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AmmoMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.78539824, 0, 0.7853982)]
+}
+
+[sub_resource type="Animation" id="Animation_0pywb"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AmmoMesh:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0.78539824, 0, 0.7853982), Vector3(0.7853982, 6.2831855, 0.7853982)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vx7qd"]
+_data = {
+&"RESET": SubResource("Animation_vx7qd"),
+&"idle": SubResource("Animation_0pywb")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0pywb"]
+render_priority = 0
+shader = ExtResource("2_vx7qd")
+
+[sub_resource type="SphereMesh" id="SphereMesh_0pywb"]
+
 [node name="Pickup" type="Area3D" unique_id=663822267]
 script = ExtResource("1_0pywb")
 
 [node name="AmmoMesh" type="MeshInstance3D" parent="." unique_id=13738821]
-transform = Transform3D(0.70710677, -0.70710677, 0, 0.49999997, 0.49999997, -0.70710677, 0.49999997, 0.49999997, 0.70710677, 0, 0, 0)
+transform = Transform3D(0.7071067, -0.7071067, 0, 0.4999999, 0.4999999, -0.70710677, 0.49999997, 0.49999997, 0.70710665, 0, 0, 0)
 mesh = SubResource("BoxMesh_j6dbu")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1317068882]
 shape = SubResource("SphereShape3D_j6dbu")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=292580319]
+libraries/ = SubResource("AnimationLibrary_vx7qd")
+autoplay = &"idle"
+
+[node name="FresnelAura" type="MeshInstance3D" parent="." unique_id=1289547521]
+material_override = SubResource("ShaderMaterial_0pywb")
+mesh = SubResource("SphereMesh_0pywb")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
