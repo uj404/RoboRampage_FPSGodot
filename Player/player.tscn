@@ -134,9 +134,10 @@ ammo_handler = NodePath("../../AmmoHandler")
 ammo_handler = NodePath("../../AmmoHandler")
 ammo_type = 1
 
-[node name="AmmoHandler" type="Node" parent="SubViewportContainer/SubViewport/WeaponCamera" unique_id=17345923 node_paths=PackedStringArray("ammo_label")]
+[node name="AmmoHandler" type="Node" parent="SubViewportContainer/SubViewport/WeaponCamera" unique_id=17345923 node_paths=PackedStringArray("ammo_label", "weapon_handler")]
 script = ExtResource("6_00tjw")
 ammo_label = NodePath("../../../../MarginContainer/AmmoLabel")
+weapon_handler = NodePath("../WeaponHandler")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1844286387]
 anchors_preset = 15
